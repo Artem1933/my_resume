@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'config/dependencies.dart';
 import 'routing/router.dart';
 import 'ui/theme/theme_view_model.dart';
@@ -7,6 +8,7 @@ import 'ui/theme/app_themes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await MobileAds.instance.initialize();
   await initializeData();
   runApp(const MyApp());
 }

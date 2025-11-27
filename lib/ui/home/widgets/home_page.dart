@@ -5,6 +5,7 @@ import '../../../routing/routes.dart';
 import '../../../domain/models/profile_model.dart';
 import '../view_models/home_view_model.dart';
 import '../../theme/theme_view_model.dart';
+import '../../common/ad_banner_widget.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -12,8 +13,10 @@ class HomePage extends StatelessWidget {
   void navigateToAddResume(BuildContext context, {ProfileModel? profile}) async {
     await context.push(AppRoutes.addResume, extra: profile);
 
-    final viewModel = context.read<HomeViewModel>();
-    viewModel.fetchAllProfiles();
+    if (context.mounted) {
+      final viewModel = context.read<HomeViewModel>();
+      viewModel.fetchAllProfiles();
+    }
   }
 
   @override
@@ -45,7 +48,8 @@ class HomePage extends StatelessWidget {
                   onTap: () {
                     context.go('/${AppRoutes.detailsBase}/${profile.id}');
                   },
-                  title: Text(profile.position, style: const TextStyle(fontWeight: FontWeight.bold)),
+                  title: Text(profile.position,
+                      style: const TextStyle(fontWeight: FontWeight.bold)),
                   subtitle: Text(profile.summary),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -75,6 +79,10 @@ class HomePage extends StatelessWidget {
               onPressed: () => context.go(AppRoutes.github),
               child: const Text('Переглянути статистику GitHub'),
             ),
+          ),
+          const SafeArea(
+            top: false,
+            child: AdBannerWidget(),
           ),
         ],
       ),
